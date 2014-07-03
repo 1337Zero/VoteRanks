@@ -1,0 +1,48 @@
+Settings:
+  mysql: false  
+  path-2-sqllitedb: 'jdbc:sqlite:plugins/VoteRanks/VoteRanks.db'
+  mysql-user: 'VoteRanks'
+  mysql-password: 'VoteRanks'
+  mysql-database-url: 'jdbc:mysql://localhost:3306/VoteRanks'
+  debug-mode: false
+  broadcast-rank-change: true
+  use-sidebar-4-votelist: true  
+  use-chat-4-votelist: false
+  use-chat-4-votes: false
+  use-sidebar-4-votes: true
+  show-votes-on-tab: false
+  sidebar-show-time-seconds: 10
+  auto-db-reset: false
+  auto-db-reset-time-days: 30 
+  command_vote: true
+  firstjoined-book: true
+  firstjoined-path: plugins\VoteRanks\Books\fjoin.txt
+Messages:
+  rank-change-msg: '&6<player> &a went up a ranking vote! (<rank>)'
+  votelist-header: '&4--- The &6<size> &4best voters! ---'
+  votelist-place-format: '&6Rank: <rank>, Player <player> with <votes> votes!'
+  votes-see-format-more-than-one: '&aYou are place <rank> with <votes> votes including <same rank> other players!'
+  votes-see-format: '&aYou are place <rank> with <votes> votes!'
+  votes-see-format-others: '&a<player> has place <rank> with <votes> votes!'
+  votes-see-format-others-more-than-one: '&a<player> has place <rank> with <votes> votes including <same rank> other player!'
+  votes-player-not-found: '&4<player> was not found!'
+  setvotes-not-int: '&4Please add a number!'
+  setvotes-2less-para: '&4/setvotes Player Amount'
+  setvotes-success: '&a<player> has now <votes> votes!'
+  clearvotes-sure: '&a Are you sure to do that?'
+  clearvotes-deny: '&a Clearing aborted!'
+  clearvotes-working: '&aDeleting all database-records ...'
+  clearvotes-done: '&aAll records deleted!'  
+  sidebar-votelist-header: '&4The &6<size> &4best voters!'
+  sidebar-rank-name: '&6Rank:'
+  sidebar-votes-name: '&6Votes:'
+  sidebar-same-rank-name: '&6Other User:'
+Goals:
+  - 'votes=1;Message=Your first vote!;broadcast=<player> has 1 vote;Give=264:0,1,null,-1,null,-1,-1,-1'
+  - 'votes=10;Message=10 votes! well-done!;broadcast=<player> has 10 votes'
+  - 'votes=50;Message=Keep it up and you will be vote-king!;broadcast=<player> has 50 votes'
+  - 'votes=100;Message=Good-work,from now on you are unofficial vote-king!;broadcast=<player> has 100 votes'
+votesits:
+  - '[BLUE]http://www.minecraft-serverlist.eu/'
+  - '[BLUE]http://www.minecraft-serverlist.net/serverlist'
+  - '[BLUE]http://serverliste.me/'

@@ -1,0 +1,38 @@
+name: VoteRanks
+version: 1.1
+description: Vote-System!
+author: 1337Zero
+prefix: Vote
+main: de.cultcraft.zero.voteranks.VoteRanks
+
+commands:
+  votelist:
+    description: See the best Voters!!
+    usage: /votelist
+  votes:
+    description: See your Vote-Stats!
+    usage: /votes
+  setvotes:
+    description: See your Vote-Stats!
+    usage: /votes
+  clearvotes:
+    description: Clear your Database!
+    usage: /clearvotes
+  clearaccept:
+    description: Accept clearing your Database!
+    usage: /clearaccept
+  cleardeny:
+    description: Deny clearing your Database!
+    usage: /cleardeny
+  vote:
+    description: See some Vote-links!
+    usage: /vote
+  voteversion:
+    description: See Voteranks-Version!
+    usage: /voteversion
+  addvote:
+    description: See Voteranks-Version!
+    usage: /voteversion
+  savebook:
+    description: See Voteranks-Version!
+    usage: /voteversion
