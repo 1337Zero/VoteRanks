@@ -15,8 +15,9 @@ Settings:
   auto-db-reset: false
   auto-db-reset-time-days: 30 
   command_vote: true
-  firstjoined-book: true
+  firstjoined-book: false
   firstjoined-path: plugins\VoteRanks\Books\fjoin.txt
+  timer: 20
 Messages:
   rank-change-msg: '&6<player> &a went up a ranking vote! (<rank>)'
   votelist-header: '&4--- The &6<size> &4best voters! ---'
