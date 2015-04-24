@@ -77,7 +77,6 @@ public class VoteListener
     	}
     }else{
     	if(dbtask.UserExistinDatabase(event.getPlayer().getName())){
-    		System.out.println("[Voteranks] Player " + event.getPlayer().getName() + " has the UUID of " + event.getPlayer().getUniqueId());
             dbtask.ExexuteQuery("UPDATE `Votes` SET `UUID` = '" + event.getPlayer().getUniqueId() + "' where `User` = '" + event.getPlayer().getName() + "'");
     	}
     }

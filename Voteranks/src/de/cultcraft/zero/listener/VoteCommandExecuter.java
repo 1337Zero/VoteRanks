@@ -57,71 +57,71 @@ public class VoteCommandExecuter
 
   public boolean onCommand(CommandSender sender, Command cmd, String args, String[] para)
   {
-    if ((sender instanceof Player))
-      if (args.equalsIgnoreCase("votelist")) {
-        if (this.config.getBoolean("Settings.use-sidebar-4-votelist")) {
-          Player p = (Player)sender;
-          try {
-            SideBarVoteList(p);
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        }
-        if (this.config.getBoolean("Settings.use-chat-4-votelist"))
-          try {
-            CommandVotelist((Player)sender);
-          } catch (SQLException e) {
-            e.printStackTrace();
-          }
-      }
-      else if (args.equalsIgnoreCase("votes")) {
-        if (this.config.getBoolean("Settings.use-sidebar-4-votes")) {
-          Player p = (Player)sender;
-          try {
-            SideBarVotes(p, para);
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        }
-        if (this.config.getBoolean("Settings.use-chat-4-votes"))
-          try {
-            CommandVotes(sender, para);
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-      } else {
-        if (args.equalsIgnoreCase("setvotes"))
-          return CommandSetVotes(sender, para);
-        if (args.equalsIgnoreCase("clearvotes"))
-          return CommandClearVotes(sender);
-        if (args.equalsIgnoreCase("clearaccept")) {
-          CommandClearVotesAccept(sender); } else {
-          if (args.equalsIgnoreCase("cleardeny"))
-            return CommandClearDeny(sender);
-          if (args.equalsIgnoreCase("vote"))
-            return CommandVote((Player)sender);
-          if (args.equalsIgnoreCase("voteversion")) {
-            sender.sendMessage(this.ch.ColorIt("&6[" + this.main.getDescription().getName() + "]&a Version: " + this.main.getDescription().getVersion())); } else {
-            if (args.equalsIgnoreCase("addVote"))
-              return addVote((Player)sender, para);
-            if (args.equalsIgnoreCase("savebook"))
-              try {
-                savebookasTxt(sender);
-              } catch (IOException e) {
-                sender.sendMessage(this.ch.ColorIt("[VoteRanks] &4OOPS, there is something wrong!"));
-                e.printStackTrace();
-              }
-          }
-        }
-      }
+    if ((sender instanceof Player)){
+    	 if (args.equalsIgnoreCase("votelist")) {
+    	        if (this.config.getBoolean("Settings.use-sidebar-4-votelist")) {
+    	          Player p = (Player)sender;
+    	          try {
+    	            SideBarVoteList(p);
+    	          } catch (Exception e) {
+    	            e.printStackTrace();
+    	          }
+    	        }
+    	        if (this.config.getBoolean("Settings.use-chat-4-votelist"))
+    	          try {
+    	            CommandVotelist((Player)sender);
+    	          } catch (SQLException e) {
+    	            e.printStackTrace();
+    	          }
+    	      }else if (args.equalsIgnoreCase("votes")) {
+    	        if (this.config.getBoolean("Settings.use-sidebar-4-votes")) {
+    	          Player p = (Player)sender;
+    	          try {
+    	            SideBarVotes(p, para);
+    	          } catch (Exception e) {
+    	            e.printStackTrace();
+    	          }
+    	        }
+    	        if (this.config.getBoolean("Settings.use-chat-4-votes"))
+    	          try {
+    	            CommandVotes(sender, para);
+    	          } catch (Exception e) {
+    	            e.printStackTrace();
+    	          }
+    	      } else {
+    	        if (args.equalsIgnoreCase("setvotes"))
+    	          return CommandSetVotes(sender, para);
+    	        if (args.equalsIgnoreCase("clearvotes"))
+    	          return CommandClearVotes(sender);
+    	        if (args.equalsIgnoreCase("clearaccept")) {
+    	          CommandClearVotesAccept(sender); } else {
+    	          if (args.equalsIgnoreCase("cleardeny"))
+    	            return CommandClearDeny(sender);
+    	          if (args.equalsIgnoreCase("vote"))
+    	            return CommandVote((Player)sender);
+    	          if (args.equalsIgnoreCase("voteversion")) {
+    	            sender.sendMessage(ChatManager.ColorIt("&6[" + this.main.getDescription().getName() + "]&a Version: " + this.main.getDescription().getVersion())); } else {
+    	            if (args.equalsIgnoreCase("addVote"))
+    	              return addVote((Player)sender, para);
+    	            if (args.equalsIgnoreCase("savebook"))
+    	              try {
+    	                savebookasTxt(sender);
+    	              } catch (IOException e) {
+    	                sender.sendMessage(ChatManager.ColorIt("[VoteRanks] &4OOPS, there is something wrong!"));
+    	                e.printStackTrace();
+    	              }
+    	            }
+    	          }
+    	      }
+    }     
     return true;
   }
   private boolean CommandVotelist(Player p) throws SQLException {
     ArrayList data = this.db.getTopTen();
     if (data != null) {
-      p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votelist-header").replace("<size>", data.size() + "")));
+      p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votelist-header").replace("<size>", data.size() + "")));
       for (int i = 0; i < data.size(); i++) {
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votelist-place-format").replace("<player>", ((PlayerData)data.get(i)).getUsername()).replace("<rank>", "" + ((PlayerData)data.get(i)).getRank()).replace("<votes>", "" + ((PlayerData)data.get(i)).getVotes())));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votelist-place-format").replace("<player>", ((PlayerData)data.get(i)).getUsername()).replace("<rank>", "" + ((PlayerData)data.get(i)).getRank()).replace("<votes>", "" + ((PlayerData)data.get(i)).getVotes())));
       }
     }
     return true;
@@ -134,16 +134,18 @@ public class VoteCommandExecuter
 
       if (search4.equalsIgnoreCase(p.getName())) {
         if (samevotes == 1)
-          p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votes-see-format").replace("<rank>","" + rank).replace("<player>", search4).replace("<votes>","" + votes)));
+          p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votes-see-format").replace("<rank>","" + rank).replace("<player>", search4).replace("<votes>","" + votes)));
         else {
-          p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votes-see-format-more-than-one").replace("<rank>", "" +rank).replace("<player>", search4).replace("<votes>", "" +votes).replace("<same rank>", "" +samevotes)));
+          p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votes-see-format-more-than-one").replace("<rank>", "" +rank).replace("<player>", search4).replace("<votes>", "" +votes).replace("<same rank>", "" +samevotes)));
         }
       }
       else if (samevotes == 1)
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votes-see-format-others").replace("<rank>", "" +rank).replace("<player>", search4).replace("<votes>","" + votes)));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votes-see-format-others").replace("<rank>", "" +rank).replace("<player>", search4).replace("<votes>","" + votes)));
       else {
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votes-see-format-others-more-than-one").replace("<rank>", "" +rank).replace("<player>", "" +search4).replace("<votes>", "" + votes).replace("<same rank>", "" +samevotes)));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votes-see-format-others-more-than-one").replace("<rank>", "" +rank).replace("<player>", "" +search4).replace("<votes>", "" + votes).replace("<same rank>", "" +samevotes)));
       }
+    }else{
+    	p.sendMessage(ChatManager.ColorIt(config.getString("Messages.player-not-found").replace("<player>", search4)));
     }
 
     return true;
@@ -153,7 +155,11 @@ public class VoteCommandExecuter
     Player p = (Player)sender;
     if (this.speicher.hasPermission(p, "VoteRank.clearvotes")) {
       this.speicher.addCleardbcmd(p);
-      p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.clearvotes-sure")));
+      p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.clearvotes-sure")));
+    }else{
+    	if(config.getBoolean("Settings.show-no-permission-msg")){
+    		p.sendMessage(ChatManager.ColorIt(config.getString("Messages.no-permissions").replace("<command>", "clearvotes")));
+    	}    	
     }
     return true;
   }
@@ -161,9 +167,9 @@ public class VoteCommandExecuter
     if ((sender instanceof Player)) {
       Player p = (Player)sender;
       if (this.speicher.hasPlayerCmdRemoveCmd(p.getName())) {
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.clearvotes-working")));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.clearvotes-working")));
         this.db.ExexuteQuery("UPDATE `Votes` set `votes` = 0");
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.clearvotes-done")));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.clearvotes-done")));
         return true;
       }
     }
@@ -177,7 +183,7 @@ public class VoteCommandExecuter
       if (this.db.UserExistinDatabase(para[0]))
         search4 = para[0];
       else
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votes-player-not-found").replace("<player>", para[0])));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votes-player-not-found").replace("<player>", para[0])));
     }
     try
     {
@@ -193,21 +199,25 @@ public class VoteCommandExecuter
       if (para.length == 2)
       {
         if (!this.db.UserExistinDatabase(para[0]))
-          p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.votes-player-not-found").replace("<player>", para[0])));
+          p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.votes-player-not-found").replace("<player>", para[0])));
         else
           try {
             this.d = new Date();
             int votes = Integer.parseInt(para[1]);
-            this.db.ExexuteQuery("UPDATE `Votes` SET `votes` = " + votes + " where `User` = '" + para[0] + "'");
-            this.db.ExexuteQuery("UPDATE `Votes` SET `lastvote` = '" + this.format.format(this.d) + "' where `User` = '" + para[0] + "'");
-            p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.setvotes-success").replace("<player>", para[0]).replace("<votes>","" + votes)));
+            this.db.ExexuteQuery("UPDATE `Votes` SET `votes` = " + votes + " where `User` like '" + para[0] + "'");
+            this.db.ExexuteQuery("UPDATE `Votes` SET `lastvote` = '" + this.format.format(this.d) + "' where `User` like '" + para[0] + "'");
+            p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.setvotes-success").replace("<player>", para[0]).replace("<votes>","" + votes)));
           } catch (Exception e) {
-            p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.setvotes-not-int")));
+            p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.setvotes-not-int")));
           }
       }
       else {
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.setvotes-2less-para")));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.setvotes-2less-para")));
       }
+    }else{
+    	if(config.getBoolean("Settings.show-no-permission-msg")){
+    		p.sendMessage(ChatManager.ColorIt(config.getString("Messages.no-permissions").replace("<command>", "setvotes")));
+    	}    	
     }
     return true;
   }
@@ -216,23 +226,24 @@ public class VoteCommandExecuter
       Player p = (Player)sender;
       if (this.speicher.hasPlayerCmdRemoveCmd(p.getName())) {
         this.speicher.removeCleardbcmd(p);
-        p.sendMessage(this.ch.ColorIt(this.config.getString("Messages.clearvotes-deny")));
+        p.sendMessage(ChatManager.ColorIt(this.config.getString("Messages.clearvotes-deny")));
       }
     }
     return true;
   }
 
+  
   private void SideBarVoteList(Player p) throws Exception {
     ArrayList data = this.db.getTopTen();
 
     Objective localObjective = Bukkit.getScoreboardManager().getNewScoreboard().registerNewObjective("Votelist", "dummy");
     String header = "&aVote-Bestenliste";
 
-    if (this.ch.ColorIt(this.config.getString("Messages.sidebar-votelist-header").replace("<size>","" + data.size())).length() < 32) {
-      header = this.ch.ColorIt(this.config.getString("Messages.sidebar-votelist-header").replace("<size>","" + data.size()));
+    if (ChatManager.ColorIt(this.config.getString("Messages.sidebar-votelist-header").replace("<size>","" + data.size())).length() < 32) {
+      header = ChatManager.ColorIt(this.config.getString("Messages.sidebar-votelist-header").replace("<size>","" + data.size()));
     }
 
-    localObjective.setDisplayName(this.ch.ColorIt(header));
+    localObjective.setDisplayName(ChatManager.ColorIt(header));
     localObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
     for (int i = 0; i < data.size(); i++) {
@@ -240,7 +251,7 @@ public class VoteCommandExecuter
       score.setScore(((PlayerData)data.get(i)).getVotes());
     }
     p.setScoreboard(localObjective.getScoreboard());
-    Thread_CloseSidebar tcs = new Thread_CloseSidebar(p, DisplaySlot.SIDEBAR, this.ch.ColorIt(header));
+    Thread_CloseSidebar tcs = new Thread_CloseSidebar(p, DisplaySlot.SIDEBAR, ChatManager.ColorIt(header));
     tcs.runTaskLater(this.main, this.config.getInt("Settings.sidebar-show-time-seconds") * 20);
     this.speicher.addnewThread(tcs);
   }
@@ -257,24 +268,26 @@ public class VoteCommandExecuter
           int rank = data.getRank();
           int samerank = this.db.getSameRank(votes);
           if (samerank == 1) {
-            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
-            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
+            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
+            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
             rankscore.setScore(rank);
             votescore.setScore(votes);
           } else {
-            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
-            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
-            Score otherscore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-same-rank-name"))));
+            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
+            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
+            Score otherscore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-same-rank-name"))));
             rankscore.setScore(rank);
             votescore.setScore(votes);
             otherscore.setScore(samerank);
           }
         }
+      }else{
+      	p.sendMessage(ChatManager.ColorIt(config.getString("Messages.player-not-found").replace("<player>", para[0])));
       }
-      localObjective.setDisplayName(this.ch.ColorIt("&6" + search4 + ":"));
+      localObjective.setDisplayName(ChatManager.ColorIt("&6" + search4 + ":"));
       localObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
       p.setScoreboard(localObjective.getScoreboard());
-      Thread_CloseSidebar tcs = new Thread_CloseSidebar(p, DisplaySlot.SIDEBAR, this.ch.ColorIt(this.ch.ColorIt("&6" + search4 + ":")));
+      Thread_CloseSidebar tcs = new Thread_CloseSidebar(p, DisplaySlot.SIDEBAR, ChatManager.ColorIt(ChatManager.ColorIt("&6" + search4 + ":")));
       tcs.runTaskLater(this.main, this.config.getInt("Settings.sidebar-show-time-seconds") * 20);
       this.speicher.addnewThread(tcs);
     } else {
@@ -285,24 +298,26 @@ public class VoteCommandExecuter
           int rank = data.getRank();
           int samerank = this.db.getSameRank(votes);
           if (samerank == 1) {
-            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
-            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
+            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
+            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
             rankscore.setScore(rank);
             votescore.setScore(votes);
           } else {
-            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
-            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
-            Score otherscore = localObjective.getScore(Bukkit.getOfflinePlayer(this.ch.ColorIt(this.config.getString("Messages.sidebar-same-rank-name"))));
+            Score rankscore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-rank-name"))));
+            Score votescore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-votes-name"))));
+            Score otherscore = localObjective.getScore(Bukkit.getOfflinePlayer(ChatManager.ColorIt(this.config.getString("Messages.sidebar-same-rank-name"))));
             rankscore.setScore(rank);
             votescore.setScore(votes);
             otherscore.setScore(samerank);
           }
-          localObjective.setDisplayName(this.ch.ColorIt("&6" + p.getName() + ":"));
+          localObjective.setDisplayName(ChatManager.ColorIt("&6" + p.getName() + ":"));
           localObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
           p.setScoreboard(localObjective.getScoreboard());
-          Thread_CloseSidebar tcs = new Thread_CloseSidebar(p, DisplaySlot.SIDEBAR, this.ch.ColorIt(this.ch.ColorIt("&6" + p.getName() + ":")));
+          Thread_CloseSidebar tcs = new Thread_CloseSidebar(p, DisplaySlot.SIDEBAR, ChatManager.ColorIt(ChatManager.ColorIt("&6" + p.getName() + ":")));
           tcs.runTaskLater(this.main, this.config.getInt("Settings.sidebar-show-time-seconds") * 20);
           this.speicher.addnewThread(tcs);
+        }else{
+        	p.sendMessage(ChatManager.ColorIt(config.getString("Messages.player-not-found").replace("<player>", p.getName())));
         }
       } catch (Exception e) {
         e.printStackTrace();
@@ -313,7 +328,7 @@ public class VoteCommandExecuter
   private boolean CommandVote(Player p) { if (this.config.getBoolean("Settings.command_vote")) {
       List votelist = this.config.getList("votesits");
       for (int i = 0; i < votelist.size(); i++) {
-        p.sendMessage(this.ch.ColorIt1(votelist.get(i).toString()));
+        p.sendMessage(ChatManager.ColorIt1(votelist.get(i).toString()));
       }
     }
     return true; }
@@ -332,7 +347,7 @@ public class VoteCommandExecuter
         try {
           amount = Integer.parseInt(para[1]);
         } catch (NumberFormatException e) {
-          p.sendMessage(this.ch.ColorIt("&6[VoteRanks]&4'" + para[1] + "' is not a number!"));
+          p.sendMessage(ChatManager.ColorIt("&6[VoteRanks]&4'" + para[1] + "' is not a number!"));
         }
         for (int i = 0; i < amount; i++) {
           Vote vote = new Vote();
@@ -343,6 +358,10 @@ public class VoteCommandExecuter
           Bukkit.getPluginManager().callEvent(new VotifierEvent(vote));
         }
       }
+    }else{
+    	if(config.getBoolean("Settings.show-no-permission-msg")){
+    		p.sendMessage(ChatManager.ColorIt(config.getString("Messages.no-permissions").replace("<command>", "addvote")));
+    	}    	
     }
     return true;
   }
@@ -382,11 +401,15 @@ public class VoteCommandExecuter
           }
           writer.flush();
           writer.close();
-          sender.sendMessage(this.ch.ColorIt("[VoteRanks] &asuccesfully written to: " + dir + "/book" + count + ".txt").replace("/", "\\"));
+          sender.sendMessage(ChatManager.ColorIt("[VoteRanks] &asuccesfully written to: " + dir + "/book" + count + ".txt").replace("/", "\\"));
         } else {
-          sender.sendMessage(this.ch.ColorIt("&4You don't have a book in your hand!"));
+          sender.sendMessage(ChatManager.ColorIt("&4You don't have a book in your hand!"));
         }
-      }
+      }else{
+    	if(config.getBoolean("Settings.show-no-permission-msg")){
+    		p.sendMessage(ChatManager.ColorIt(config.getString("Messages.no-permissions").replace("<command>", "savebook")));
+    	}    	
+    }
     } else {
       sender.sendMessage("[Voteranks] You have to be a user to do that!");
     }

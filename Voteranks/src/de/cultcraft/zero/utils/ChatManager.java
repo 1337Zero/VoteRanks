@@ -111,7 +111,7 @@ public class ChatManager
     return Message;
   }
 
-  public String ColorIt1(String Message) {
+  public static String ColorIt1(String Message) {
     while ((Message.contains("[RESET]")) || (Message.contains("[BOLD]")) || 
       (Message.contains("[MAGIC]")) || (Message.contains("[ITALIC]")) || (Message.contains("[UNDERLINE]")) || (Message.contains("[STRIKETHROUGH]")) || (Message.contains("[WHITE]")) || (Message.contains("[YELLOW]")) || (Message.contains("[LIGHT_PURPLE]")) || 
       (Message.contains("[RED]")) || (Message.contains("[AQUA]")) || (Message.contains("[GREEN]")) || (Message.contains("[BLUE]")) || (Message.contains("[DARK_GRAY]")) || (Message.contains("[GRAY]")) || (Message.contains("[GOLD]")) || 

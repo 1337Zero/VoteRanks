@@ -119,7 +119,7 @@ public class DbTask
   {
     if (this.speicher.getDbSystem().equalsIgnoreCase("sqlite"))
       try {
-        ResultSet data = this.sdb.executeQry("SELECT * FROM `Votes` WHERE `User` like '%" + Player + "%'");
+        ResultSet data = this.sdb.executeQry("SELECT * FROM `Votes` WHERE `User` like '" + Player + "'");
         PlayerData back = new PlayerData(data.getString(2), data.getInt(3), 0, data.getString(4), data.getString(1));
         ResultSet count = this.sdb.executeQry("SELECT COUNT(User) FROM `Votes` WHERE `votes` > " + data.getInt(3));
         back.setRank(count.getInt(1) + 1);
@@ -129,7 +129,7 @@ public class DbTask
       }
     else {
       try {
-        ResultSet data = this.db.executeRs("SELECT * FROM `Votes` WHERE `User` like '%" + Player + "%'");
+        ResultSet data = this.db.executeRs("SELECT * FROM `Votes` WHERE `User` like '" + Player + "'");
         ResultSet count = this.db.executeRs("SELECT COUNT(User) FROM `Votes` WHERE `votes` > " + data.getInt(3));
         return new PlayerData(data.getString(2), data.getInt(3), count.getInt(1) + 1, data.getString(4), data.getString(1));
       } catch (SQLException e) {

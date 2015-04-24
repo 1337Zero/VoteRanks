@@ -18,6 +18,7 @@ Settings:
   firstjoined-book: false
   firstjoined-path: plugins\VoteRanks\Books\fjoin.txt
   timer: 20
+  show-no-permission-msg: true
 Messages:
   rank-change-msg: '&6<player> &a went up a ranking vote! (<rank>)'
   votelist-header: '&4--- The &6<size> &4best voters! ---'
@@ -38,6 +39,8 @@ Messages:
   sidebar-rank-name: '&6Rank:'
   sidebar-votes-name: '&6Votes:'
   sidebar-same-rank-name: '&6Other User:'
+  no-permissions: '&4You are not permitted to use <command>'
+  player-not-found: '&4<player> not found'
 Goals:
   - 'votes=1;Message=Your first vote!;broadcast=<player> has 1 vote;Give=264:0,1,null,-1,null,-1,-1,-1'
   - 'votes=10;Message=10 votes! well-done!;broadcast=<player> has 10 votes'
