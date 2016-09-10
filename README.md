@@ -22,12 +22,12 @@ Copy all plugins u want to install into ur Plugins folder, restart the Server an
 #### Options, use one or more as u wish: 
 
 * Message=Hello! , this will the message "Hello!" to the Player
-* broadcast=<player> Votet! , this will send a broadcast with the message "<player> Votet!"
+* broadcast=player Votet! , this will send a broadcast with the message "<player> Votet!"
+* command=command , this triggers the execution of a command from the console
+* book=[file]filename this loads a book from a file and gives it the player , use /savebook to save a book in a file
+* book=author:Server-Team,title:The book,description:a book, fairly square!,&4Site1[newline]&4Site1,line2[newpage]Site2
 * Give=id:subid,amount,Enchantment,lvl of entchantment,Name,red,green,blue , this is a bit complicatet but it also supports
 alot of informations.
-* command=<command> , this triggers the execution of a command from the console
-* book=[file]<filename> this loads a book from a file and gives it the player , use /savebook to save a book in a file
-* book=author:Server-Team,title:The book,description:a book, fairly square!,&4Site1[newline]&4Site1,line2[newpage]Site2
 
 ##### Explantation for Give:
 * id:subid , this is the Items id with the subid
