@@ -45,6 +45,7 @@ https://dev.bukkit.org/bukkit-plugins/vote-ranks/
 https://dev.bukkit.org/bukkit-plugins/vault/
 ## Credits
 Thx for the development of Votifier, without this plugin wouldn't be possible
+
 ## License
 GNU
 </snippet>
