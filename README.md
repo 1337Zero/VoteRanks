@@ -1,6 +1,5 @@
 <snippet>
-  <content><![CDATA[
-# ${1:Vote-Ranks}
+# Vote-Ranks
 TODO: Make it easier to create Items, and multiple Enchantments per Item
 ## Installation
 Download the newest version of Votifier, link below.
@@ -48,6 +47,4 @@ https://dev.bukkit.org/bukkit-plugins/vault/
 Thx for the development of Votifier, without this plugin wouldn't be possible
 ## License
 GNU
-]]></content>
-  <tabTrigger>readme</tabTrigger>
 </snippet>
