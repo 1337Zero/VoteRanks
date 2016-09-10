@@ -50,3 +50,6 @@ votesits:
   - '[BLUE]http://www.minecraft-serverlist.eu/'
   - '[BLUE]http://www.minecraft-serverlist.net/serverlist'
   - '[BLUE]http://serverliste.me/'
+randomitemlist:
+  - 264:0,1,null,-1,null,-1,-1,-1
+  - 300:0,1,PROTECTION_EXPLOSIONS,1337,&6Marius-Suit,50,0,0

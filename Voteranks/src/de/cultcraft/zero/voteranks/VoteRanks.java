@@ -24,7 +24,7 @@ public class VoteRanks extends JavaPlugin
 {
   private Logger log = Bukkit.getLogger();
   private VoteListener listener = null;
-  private FileConfiguration config = null;
+  public static FileConfiguration config = null;
   private DbTask dbtask = null;
   private VoteCommandExecuter cmd;
   private speicher speicher = null;
