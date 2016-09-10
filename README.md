@@ -1,5 +1,8 @@
 <snippet>
 # Vote-Ranks
+
+A Bukkit Plugin to count Votes of Players, let them reach specific Goals and Display the Votes on Tablist or as Sitebar
+
 TODO: Make it easier to create Items, and multiple Enchantments per Item
 ## Installation
 Download the newest version of Votifier, link below.
