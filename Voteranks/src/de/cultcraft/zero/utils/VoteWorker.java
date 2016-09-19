@@ -78,7 +78,7 @@ public class VoteWorker extends BukkitRunnable{
 						//Items
 						for(int i = 0; i < goal.getItem().size();i++){
 							if(goal.getItem().get(i) instanceof RandomItemStack){
-								p.getInventory().addItem(getRandomItem());
+								p.getInventory().addItem(getRandomItem(((RandomItemStack) goal.getItem().get(i)), goal));
 							}else{
 								p.getInventory().addItem(goal.getItem().get(i));
 							}						  
@@ -92,8 +92,8 @@ public class VoteWorker extends BukkitRunnable{
 			}
 		}		
 	}
-	private ItemStack getRandomItem(){
-		List<String> randomitem = (List<String>) VoteRanks.config.getList("randomitemlist");		
+	private ItemStack getRandomItem(RandomItemStack rstack,Goal g){
+		List<String> randomitem = (List<String>) VoteRanks.config.getList(rstack.getList());	
 		Random r = new Random();
 		try {
 			int random = r.nextInt(randomitem.size());
@@ -104,6 +104,7 @@ public class VoteWorker extends BukkitRunnable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+		System.out.println("[Vote-Rank] ERROR while giving itemstack of goal " + g + " giving air instead!" );
 		return new ItemStack(Material.AIR);
 	}
 }

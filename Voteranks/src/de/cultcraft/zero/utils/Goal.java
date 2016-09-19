@@ -84,12 +84,22 @@ public class Goal {
 			 }else if ((line[x].contains("Give=")) || (line[x].contains("give="))) {
 				 String goalpartid = line[x].split("=")[1];
 				 //Give=264:0,1,null,-1,null,-1,-1,-1
-				 if(goalpartid.equalsIgnoreCase("randomitem")){
-					 goal.addItem(new RandomItemStack());
+				 String[] subdata = goalpartid.split(",");	
+				 if(subdata.length == 8){
+					 ItemStack stack = getItemStack(Integer.parseInt(subdata[0].split(":")[0]), Integer.parseInt(subdata[0].split(":")[1]), Integer.parseInt(subdata[1]), Enchantment.getByName(subdata[2]), Integer.parseInt(subdata[3]), subdata[4], Integer.parseInt(subdata[5]), Integer.parseInt(subdata[6]), Integer.parseInt(subdata[7]));
+					 goal.addItem(stack); 
 				 }else{
-					String[] subdata = goalpartid.split(",");	             
-					ItemStack stack = getItemStack(Integer.parseInt(subdata[0].split(":")[0]), Integer.parseInt(subdata[0].split(":")[1]), Integer.parseInt(subdata[1]), Enchantment.getByName(subdata[2]), Integer.parseInt(subdata[3]), subdata[4], Integer.parseInt(subdata[5]), Integer.parseInt(subdata[6]), Integer.parseInt(subdata[7]));
-					goal.addItem(stack);
+					 if(subdata[0].equalsIgnoreCase("randomitem")){							 
+						 goal.addItem(new RandomItemStack("randomitemlist"));
+					 }else{
+						 	if(VoteRanks.config.getList(subdata[0]) != null){
+						 		 goal.addItem(new RandomItemStack(subdata[0])); 
+						 	}else{
+						 		System.out.println("[Vote-Rank] ERROR while searching for list '" + subdata[0] + " it's not in your config!" );
+						 		throw new NoSuchFieldError(subdata[0] + " is not in your config!");
+						 	}
+					 }
+					 
 				 }
 	          } else if ((line[x].contains("command=")) || (line[x].contains("Command="))) {
 	              goal.addCommand(line[x].split("=")[1]);	            
