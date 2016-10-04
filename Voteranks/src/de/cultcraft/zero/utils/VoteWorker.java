@@ -35,62 +35,70 @@ public class VoteWorker extends BukkitRunnable{
 	}
 	
 	private void LookupGoalsAndPerform(int votes,Player p){
-		for(Goal goal : goals){
-			boolean allow = false;
-			if(goal.getType().equals(Goaltype.BIGGER)){
-				if(votes > goal.getVotes()){
-					allow = true;
-				}
-			}else if(goal.getType().equals(Goaltype.SMALLER)){
-				if(votes < goal.getVotes()){
-					allow = true;
-				}				
-			}else if(goal.getType().equals(Goaltype.SAME)){
-				if(votes == goal.getVotes()){
-					allow = true;
-				}			
-			}else if(goal.getType().equals(Goaltype.MODULO)){
-				if(votes % goal.getVotes() == 0){
-					allow = true;
-				}			
-			}
-			
-			if(allow == true){	
-				if(goal.hasAccess(p)){
-					allow = false;
-					//Broadcasts
-					for(int i = 0; i < goal.getBroadcast().size();i++){
-						Bukkit.getServer().broadcastMessage(goal.getBroadcast().get(i).replace("<player>", p.getName()).replace("<votes>", "" +votes));
+		if(p != null){
+			if(p.isOnline()){
+				for(Goal goal : goals){
+					boolean allow = false;
+					if(goal.getType().equals(Goaltype.BIGGER)){
+						if(votes > goal.getVotes()){
+							allow = true;
+						}
+					}else if(goal.getType().equals(Goaltype.SMALLER)){
+						if(votes < goal.getVotes()){
+							allow = true;
+						}				
+					}else if(goal.getType().equals(Goaltype.SAME)){
+						if(votes == goal.getVotes()){
+							allow = true;
+						}			
+					}else if(goal.getType().equals(Goaltype.MODULO)){
+						if(votes % goal.getVotes() == 0){
+							allow = true;
+						}			
 					}
 					
-					//Messages to the Player
-					if(p.isOnline()){
-						for(int i = 0; i < goal.getPersonalMessage().size();i++){
-							  p.sendMessage(goal.getPersonalMessage().get(i).replace("<player>", p.getName()).replace("<votes>", "" +votes));
-						}
-					}				
-					//Commands
-					for(int i = 0; i < goal.getCommand().size();i++){
-						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), goal.getCommand().get(i).replace("<player>", p.getName()));
+					if(allow == true){	
+						if(goal.hasAccess(p)){
+							allow = false;
+							//Broadcasts
+							for(int i = 0; i < goal.getBroadcast().size();i++){
+								Bukkit.getServer().broadcastMessage(goal.getBroadcast().get(i).replace("<player>", p.getName()).replace("<votes>", "" +votes));
+							}
+							
+							//Messages to the Player
+							if(p.isOnline()){
+								for(int i = 0; i < goal.getPersonalMessage().size();i++){
+									  p.sendMessage(goal.getPersonalMessage().get(i).replace("<player>", p.getName()).replace("<votes>", "" +votes));
+								}
+							}				
+							//Commands
+							for(int i = 0; i < goal.getCommand().size();i++){
+								Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), goal.getCommand().get(i).replace("<player>", p.getName()));
+							}
+							
+							if(p.isOnline()){
+								//Items
+								for(int i = 0; i < goal.getItem().size();i++){
+									if(goal.getItem().get(i) instanceof RandomItemStack){
+										p.getInventory().addItem(getRandomItem(((RandomItemStack) goal.getItem().get(i)), goal));
+									}else{
+										p.getInventory().addItem(goal.getItem().get(i));
+									}						  
+								}
+								//Books
+								for(int i = 0; i < goal.getBook().size();i++){
+									  p.getInventory().addItem(goal.getBook().get(i));
+								}
+							}	
+						}								
 					}
-					
-					if(p.isOnline()){
-						//Items
-						for(int i = 0; i < goal.getItem().size();i++){
-							if(goal.getItem().get(i) instanceof RandomItemStack){
-								p.getInventory().addItem(getRandomItem(((RandomItemStack) goal.getItem().get(i)), goal));
-							}else{
-								p.getInventory().addItem(goal.getItem().get(i));
-							}						  
-						}
-						//Books
-						for(int i = 0; i < goal.getBook().size();i++){
-							  p.getInventory().addItem(goal.getBook().get(i));
-						}
-					}	
-				}								
+				}	
+			}else{
+				System.out.println(p.getName() + " is not online anymore, aborting Vote-Option-Perform for " + votes + " Votes!");
 			}
-		}		
+		}else{
+			System.out.println("[VoteRanks] Null Player found!");
+		}
 	}
 	private ItemStack getRandomItem(RandomItemStack rstack,Goal g){
 		List<String> randomitem = (List<String>) VoteRanks.config.getList(rstack.getList());	
