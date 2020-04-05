@@ -15,10 +15,10 @@ import de.cultcraft.zero.voteranks.VoteRanks;
 public class VoteWorker extends BukkitRunnable{
 
 	private ArrayList<WorkTask> worktasks = new ArrayList<WorkTask>();
-	private ArrayList<Goal> goals = new ArrayList<Goal>();
+	public static ArrayList<Goal> goals = new ArrayList<Goal>();
 	
 	public VoteWorker(ArrayList<Goal> goals) {
-		this.goals = goals;
+		VoteWorker.goals = goals;
 	}
 	
 	@Override
@@ -74,8 +74,7 @@ public class VoteWorker extends BukkitRunnable{
 							//Commands
 							for(int i = 0; i < goal.getCommand().size();i++){
 								Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), goal.getCommand().get(i).replace("<player>", p.getName()));
-							}
-							
+							}							
 							if(p.isOnline()){
 								//Items
 								for(int i = 0; i < goal.getItem().size();i++){
@@ -101,6 +100,7 @@ public class VoteWorker extends BukkitRunnable{
 		}
 	}
 	private ItemStack getRandomItem(RandomItemStack rstack,Goal g){
+		@SuppressWarnings("unchecked")
 		List<String> randomitem = (List<String>) VoteRanks.config.getList(rstack.getList());	
 		Random r = new Random();
 		try {

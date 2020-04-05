@@ -1,9 +1,11 @@
 name: VoteRanks
-version: 1.3.4
+version: 1.3.5
 description: Vote-System!
 author: 1337Zero
 prefix: Vote
 main: de.cultcraft.zero.voteranks.VoteRanks
+depend: [Votifier]
+api-version: 1.13
 
 commands:
   votelist:
@@ -36,3 +38,9 @@ commands:
   savebook:
     description: See Voteranks-Version!
     usage: /voteversion
+  storeStack:
+    description: Stores an Item in your Database
+    usage: /storeStack
+  editGoal:
+    description: Edits a goal
+    usage: /editGoal

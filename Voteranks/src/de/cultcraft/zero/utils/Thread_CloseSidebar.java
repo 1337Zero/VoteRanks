@@ -3,8 +3,6 @@ package de.cultcraft.zero.utils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 
 public class Thread_CloseSidebar extends BukkitRunnable
 {
