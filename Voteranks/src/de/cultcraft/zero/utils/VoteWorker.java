@@ -64,7 +64,6 @@ public class VoteWorker extends BukkitRunnable{
 							for(int i = 0; i < goal.getBroadcast().size();i++){
 								Bukkit.getServer().broadcastMessage(goal.getBroadcast().get(i).replace("<player>", p.getName()).replace("<votes>", "" +votes));
 							}
-							
 							//Messages to the Player
 							if(p.isOnline()){
 								for(int i = 0; i < goal.getPersonalMessage().size();i++){
@@ -73,7 +72,13 @@ public class VoteWorker extends BukkitRunnable{
 							}				
 							//Commands
 							for(int i = 0; i < goal.getCommand().size();i++){
-								Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), goal.getCommand().get(i).replace("<player>", p.getName()));
+								if(goal.getCommand().get(i).equalsIgnoreCase("randomcommand") || goal.getCommand().get(i).equalsIgnoreCase("randomcommandlist")) {
+									String command = Goal.getRandomCommand().replace("<player>",  p.getName());
+									Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+								}else {
+									String command = goal.getCommand().get(i).replace("<player>", p.getName());
+									Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+								}
 							}							
 							if(p.isOnline()){
 								//Items

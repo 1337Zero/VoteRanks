@@ -19,7 +19,11 @@ Settings:
   firstjoined-path: plugins\VoteRanks\Books\fjoin.txt
   timer: 20
   show-no-permission-msg: true
+  backup-on-delete: true
+  backup-top-x: 20
 Messages:
+  config-saved: '&a[&6VoteRanks&a] &6Config&a saved! '
+  rank-change-msg: '&a[&6VoteRanks&a] &6<player> &a went up a ranking vote! (<rank>)'
   rank-change-msg: '&a[&6VoteRanks&a] &6<player> &a went up a ranking vote! (<rank>)'
   votelist-header: '&4--- The &6<size> &4best voters! ---'
   votelist-place-format: '&a[&6VoteRanks&a] &6Rank: <rank>, Player <player> with <votes> votes!'
@@ -42,16 +46,33 @@ Messages:
   no-permissions: '&4You are not permitted to use <command>'
   player-not-found: '&4<player> not found'
   item-stored: '&7Item with the &c<id>&7 stored in the database'
-  goal-message-added: '&a[&6VoteRanks&a] Private Message <message> added to goal with id <id>'
-  goal-book-added: '&a[&6VoteRanks&a] Book with Path <path> added to goal with id <id>'
-  goal-book-not-found: '&a[&6VoteRanks&a] The Book with Path <path> does not exist!'
-  goal-broadcast-added: '&a[&6VoteRanks&a] Broadcast <broadcast> added to goal with id <id>'
-  goal-randomitemlist-added: '&a[&6VoteRanks&a] Random Item List named <list> added to goal with id <id>'
-  goal-randomcommandlist-added: '&a[&6VoteRanks&a] Random Command List named <list> added to goal with id <id>'
-  goal-command-added: '&a[&6VoteRanks&a] Command <command> added to goal with id <id>'
+  goal-message-added: '&a[&6VoteRanks&a] Private Message <message> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-dbitem-added: '&a[&6VoteRanks&a] DbItem with the id <dbid> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-book-added: '&a[&6VoteRanks&a] Book with Path <path> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-book-not-found: '&a[&6VoteRanks&a] The Book with Path <path> does not exist!, remember to use editgoal save to save!'
+  goal-broadcast-added: '&a[&6VoteRanks&a] Broadcast <broadcast> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-randomitemlist-added: '&a[&6VoteRanks&a] Random Item List named <list> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-randomcommandlist-added: '&a[&6VoteRanks&a] Random Command List named <list> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-command-added: '&a[&6VoteRanks&a] Command <command> added to goal with id <id>, remember to use editgoal save to save!'
+  goal-list-not-existing: '&a[&6VoteRanks&a] Warning: List <list> does not exist, remember to use editgoal save to save!'
+  goal-message-set: '&a[&6VoteRanks&a] Private Message <message> set to goal with id <id> and message with id <mid>, remember to use editgoal save to save!'
+  goal-dbitem-set: '&a[&6VoteRanks&a] DbItem with the id <dbid> set to goal with id <id> and the countID <dbicnid>, remember to use editgoal save to save!'
+  goal-book-set: '&a[&6VoteRanks&a] Book with Path <path> set to goal with id <id> and Book ID <bid>, remember to use editgoal save to save!'
+  goal-broadcast-set: '&a[&6VoteRanks&a] Broadcast <broadcast> set to goal with id <id> and BroadcastID <bid>, remember to use editgoal save to save!'
+  goal-randomitemlist-set: '&a[&6VoteRanks&a] Random Item List named <list> set to goal with id <id> and the ListID <list>, remember to use editgoal save to save!'
+  goal-randomcommandlist-set: '&a[&6VoteRanks&a] Random Command List named <list> set to goal with id <id> and the ListID <list>, remember to use editgoal save to save!'
+  goal-command-set: '&a[&6VoteRanks&a] Command <command> set to goal with id <id> and the CiD <cid>, remember to use editgoal save to save!'
+  goal-message-removed: '&a[&6VoteRanks&a] Private Message <message> removed from goal with id <id>, remember to use editgoal save to save!'
+  goal-dbitem-removed: '&a[&6VoteRanks&a] DbItem with the id <dbid> removed from goal with id <id> and the countID <dbicnid>, remember to use editgoal save to save!'
+  goal-book-removed: '&a[&6VoteRanks&a] Book with Path <path> removed from goal with id <id> and Book ID <bid>, remember to use editgoal save to save!'
+  goal-broadcast-removed: '&a[&6VoteRanks&a] Broadcast <broadcast> removed from goal with id <id> and BroadcastID <bid>, remember to use editgoal save to save!'
+  goal-randomitemlist-removed: '&a[&6VoteRanks&a] Random Item List named <list> removed from goal with id <id> and the ListID <list>, remember to use editgoal save to save!'
+  goal-randomcommandlist-removed: '&a[&6VoteRanks&a] Random Command List named <list> removed from goal with id <id> and the ListID <list>, remember to use editgoal save to save!'
+  goal-command-removed: '&a[&6VoteRanks&a] Command <command> removed from goal with id <id> and the CiD <cid>, remember to use editgoal save to save!'
   goal-list-not-existing: '&a[&6VoteRanks&a] Warning: List <list> does not exist'
   not-a-number: '&a[&6VoteRanks&a] <string> is not a number!'  
-  editgoal-types: '&a[&6VoteRanks&a] Following Subcommands of editgoal can be used<newline>addmessage <message><newline>addbroadcast <broadcast><newline>addcommand <command><newline>addGiveList <list><newline>addCommandList <list><newline>addBook <path>'
+  out-of-range: '&a[&6VoteRanks&a] <number> is out of range (max value is <max>!)'  
+  editgoal-types: '&a[&6VoteRanks&a] Following Subcommands of editgoal can be used<newline>save<newline>show <opt: goal ID><newline>addmessage <goalid> <message><newline>addbroadcast <goalid> <broadcast><newline>addcommand <goalid> <command><newline>addGiveList <goalid> <list><newline>addCommandList <goalid> <list><newline>addBook <goalid> <path><newline>setmessage <goalid> <message><newline>setbroadcast <goalid> <broadcast><newline>setcommand <goalid> <command><newline>setGiveList <goalid> <list><newline>setCommandList <goalid> <list><newline>setBook <goalid> <path><newline>removemessage <goalid> <message><newline>removebroadcast <goalid> <broadcast><newline>removecommand <goalid> <command><newline>removeGiveList <goalid> <list><newline>removeCommandList <goalid> <list><newline>removeBook <goalid> <path>'
   goal-neededVotes: '&a[&6VoteRanks&a] Needed votes <type> <votes>'
   goal-messages: '&a[&6VoteRanks&a] Messages:'
   goal-commands: '&a[&6VoteRanks&a] Commands:'
@@ -71,4 +92,4 @@ randomitemlist:
   - DIAMOND,1,null,-1,null,-1,-1,-1
   - LEATHER_LEGGINGS,1,PROTECTION_EXPLOSIONS,1337,&6Marius-Suit,50,0,0
 randomcommandlist:
-  - 'say <player has voted'
+  - 'say <player> has voted'

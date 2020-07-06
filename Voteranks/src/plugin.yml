@@ -44,3 +44,9 @@ commands:
   editGoal:
     description: Edits a goal
     usage: /editGoal
+  votetopb:
+    description: Edits a goal
+    usage: /editGoal
+  votereload:
+    description: Reloads Voteranks
+    usage: /votereload

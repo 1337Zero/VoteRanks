@@ -54,6 +54,8 @@ public class VoteRanks extends JavaPlugin {
 		getCommand("savebook").setExecutor(this.cmd);
 		getCommand("storeStack").setExecutor(this.cmd);
 		getCommand("editGoal").setExecutor(this.cmd);
+		getCommand("votetopb").setExecutor(this.cmd);
+		getCommand("votereload").setExecutor(this.cmd);
 		this.log.info("[" + getDescription().getName() + "] " + "Suche Vault ... ");
 		if (Bukkit.getPluginManager().getPlugin("Vault") != null) {
 			this.log.info("[" + getDescription().getName() + "] " + "Vault wurde gefunden! ");
@@ -80,8 +82,10 @@ public class VoteRanks extends JavaPlugin {
 		saveConfig();
 		return getConfig();
 	}
+	
+	
 
-	private ArrayList<Goal> loadGoals() {
+	public ArrayList<Goal> loadGoals() {
 		@SuppressWarnings("unchecked")
 		List<String> goals = (List<String>) VoteRanks.config.getList("Goals");
 		ArrayList<Goal> makedGoals = new ArrayList<Goal>();

@@ -199,7 +199,6 @@ public class DbTask {
 		}
 		rs.close();
 		ItemStack stack = ZAItem.MapToItem(data);
-		System.out.println(stack.getItemMeta().getDisplayName());
 		return stack;
 	}
 
@@ -279,11 +278,13 @@ public class DbTask {
 				this.db.ExecuteStmt("CREATE TABLE IF NOT EXISTS Votes (UUID VARCHAR(64), User VARCHAR(30),votes int, lastvote VARCHAR(30));");
 				this.db.ExecuteStmt("CREATE TABLE IF NOT EXISTS Resets (Date VARCHAR(30) ,done int);");
 				this.db.ExecuteStmt("CREATE TABLE IF NOT EXISTS itemdata (idid INT AUTO_INCREMENT,iid INT,name text,value text,PRIMARY KEY (idid));");
+				this.db.ExecuteStmt("CREATE TABLE IF NOT EXISTS Vote_backup (vbid INT AUTO_INCREMENT,UUID VARCHAR(64),username VARCHAR(30),votes int,backupdate VARCHAR(30),PRIMARY KEY (vbid));");
 
 			} else {
 				this.sdb.executeStmt("CREATE TABLE IF NOT EXISTS Votes (UUID VARCHAR(64), User VARCHAR(30),votes int, lastvote VARCHAR(30));");
 				this.sdb.executeStmt("CREATE TABLE IF NOT EXISTS Resets (Date VARCHAR(30) ,done int);");
 				this.sdb.executeStmt("CREATE TABLE IF NOT EXISTS itemdata (idid INT AUTO_INCREMENT,iid INT,name text,value text,PRIMARY KEY (idid));");
+				this.sdb.executeStmt("CREATE TABLE IF NOT EXISTS Vote_backup (vbid INT AUTO_INCREMENT,UUID VARCHAR(64),username VARCHAR(30),votes int,backupdate VARCHAR(30),PRIMARY KEY (vbid));");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -291,7 +292,6 @@ public class DbTask {
 	}
 
 	public PreparedStatement getPreparedStmnt(String sql) throws SQLException {
-		System.out.println(sql);
 		if (this.db != null) {
 			return this.db.prepareStmnt(sql);
 		} else {
@@ -312,7 +312,30 @@ public class DbTask {
 	}
 
 	public void clearAllVotes() {
+		if(VoteRanks.config.getBoolean("Settings.backup-on-delete")) {
+			backupXTopVotes();
+		}
 		ExexuteQuery("UPDATE `Votes` set `votes` = 0");
+	}
+	
+	private void backupXTopVotes() {
+		int topamount = VoteRanks.config.getInt("Settings.backup-top-x");
+		//CREATE TABLE IF NOT EXISTS Vote_backup (vbid INT AUTO_INCREMENT,UUID VARCHAR(64),username VARCHAR(30),votes int,backupdate VARCHAR(30),PRIMARY KEY (idid));
+		ResultSet rs = this.getResultSet("SELECT * FROM Votes ORDER BY `votes` DESC LIMIT 0," + topamount);		
+		try {
+			PreparedStatement insert = getPreparedStmnt("INSERT INTO Vote_backup (UUID,username,votes,backupdate) VALUES (?,?,?,?)");
+			while(rs.next()) {
+				insert.setString(1, rs.getString("UUID"));
+				insert.setString(2, rs.getString("User"));
+				insert.setInt(3, rs.getInt("votes"));
+				insert.setString(4, format.format(new Date()));
+				insert.addBatch();
+			}
+			insert.executeBatch();
+			rs.close();
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}		
 	}
 
 	public void ExexuteQuery(String query) {
@@ -442,6 +465,53 @@ public class DbTask {
 				do {
 					back.add(new PlayerData(data.getString(2), data.getInt(3), rank, data.getString(4),
 							data.getString(1)));
+					rank++;
+				} while (data.next());
+				return back;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("[ERROR] Konnte keine Verbindung zu der Sqlite oder der Mysql db erstellen!");
+		return null;
+	}
+	public ArrayList<PlayerData> getTopTenBackup(String para) {
+		ArrayList<PlayerData> back = new ArrayList<PlayerData>();
+		if (DbTask.dbSystem.equalsIgnoreCase("sqlite")) {
+			try {
+				int rank = 1;
+				PreparedStatement ps = getPreparedStmnt("SELECT * FROM `Vote_backup` WHERE backupdate like %?% ORDER BY `votes` DESC LIMIT 0,10");
+				para = "%" + para + "%";
+				ps.setString(1, para);
+				
+				ResultSet data = ps.executeQuery();
+				data.next();
+				do {
+					if (!back.toString().contains(data.getString(2))) {
+						back.add(new PlayerData(data.getString(3), data.getInt(4), rank, data.getString(5),
+								data.getString(2)));
+						rank++;
+					}
+				}while (data.next());
+				return back;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				int rank = 1;
+				PreparedStatement ps = getPreparedStmnt("SELECT * FROM `Vote_backup` WHERE backupdate like ? ORDER BY `votes` DESC LIMIT 0,10");
+				para = "%" + para + "%";
+				ps.setString(1, para);
+				ResultSet data = ps.executeQuery();
+				data.next();
+
+				// ResultSet data = this.db.executeRs("SELECT * FROM `Votes` ORDER BY `votes`
+				// DESC LIMIT 0,10");
+				do {
+					//name,votes,rank,lastvote,uuid
+					back.add(new PlayerData(data.getString(3), data.getInt(4), rank, data.getString(5),
+							data.getString(2)));
 					rank++;
 				} while (data.next());
 				return back;
@@ -584,4 +654,6 @@ public class DbTask {
 			e.printStackTrace();
 		}
 	}
+
+	
 }
