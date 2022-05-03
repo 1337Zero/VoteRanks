@@ -19,8 +19,11 @@ Settings:
   firstjoined-path: plugins\VoteRanks\Books\fjoin.txt
   timer: 20
   show-no-permission-msg: true
-  backup-on-delete: true
+  backup-on-delete: false
   backup-top-x: 20
+  backup-top-votes-on-first-day-of-month: true
+  delete-votes-on-first-day-of-month: true
+  delete-votebackup-on-first-day-of-month: true
 Messages:
   config-saved: '&a[&6VoteRanks&a] &6Config&a saved! '
   rank-change-msg: '&a[&6VoteRanks&a] &6<player> &a went up a ranking vote! (<rank>)'

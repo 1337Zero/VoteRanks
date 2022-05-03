@@ -7,6 +7,7 @@ import de.cultcraft.zero.utils.Goal;
 import de.cultcraft.zero.utils.VoteWorker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
@@ -68,6 +69,25 @@ public class VoteRanks extends JavaPlugin {
 		this.log.info("[" + getDescription().getName() + "] " + "looking up db-version...");
 
 		this.log.info("[" + getDescription().getName() + "] " + "geladen! ");
+		
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_MONTH); 
+		
+		//Pr�fen ob heute der 1te ist
+		if(day == 1 && config.getBoolean("Settings.backup-top-votes-on-first-day-of-month")) {
+			if(config.getBoolean("Settings.delete-votebackup-on-first-day-of-month")) {
+				dbtask.clearBackupedVotes();
+			}
+			
+			log.info("First day of Month, creating a backup...");
+			int cnt = dbtask.backupAllVotes();
+			log.info("Backup of " + cnt + " Users created.");
+			
+			if(config.getBoolean("Settings.delete-votes-on-first-day-of-month")) {
+				dbtask.clearAllVotes();
+				log.info("Deleted all Votes");
+			}			
+		}		
 	}
 
 	public void onDisable() {

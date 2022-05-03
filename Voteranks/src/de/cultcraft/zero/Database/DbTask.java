@@ -1,5 +1,6 @@
 package de.cultcraft.zero.Database;
 
+import de.cultcraft.zero.utils.Base64Coder;
 import de.cultcraft.zero.utils.PlayerData;
 import de.cultcraft.zero.utils.ZAItem;
 import de.cultcraft.zero.voteranks.VoteRanks;
@@ -19,13 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 public class DbTask {
 	private FileConfiguration config = null;
@@ -162,7 +161,7 @@ public class DbTask {
 		if (this.db != null) {
 			return this.db.executeStmtWithGeneratedKeys(query);
 		} else {
-			throw new NotImplementedException("Sqlite doenst like to return generated keys!");
+			throw new Error("Sqlite doenst like to return generated keys!");
 		}
 	}
 
@@ -315,7 +314,31 @@ public class DbTask {
 		if(VoteRanks.config.getBoolean("Settings.backup-on-delete")) {
 			backupXTopVotes();
 		}
-		ExexuteQuery("UPDATE `Votes` set `votes` = 0");
+		ExexuteQuery("TRUNCATE Votes");
+	}
+	
+	public int backupAllVotes() {
+		int cnt = 1;
+		ResultSet rs = this.getResultSet("SELECT * FROM Votes where votes > 0 ORDER BY votes DESC LIMIT 0,10");		
+		try {
+			PreparedStatement insert = getPreparedStmnt("INSERT INTO Vote_backup (UUID,username,votes,backupdate) VALUES (?,?,?,?)");
+			do {
+				//VoteRanks.instance.log.info(rs.getString("UUID") + ";" + rs.getString("User") + ";" + rs.getInt("votes") + ";" + format.format(new Date()));
+				insert.setString(1, rs.getString("UUID"));
+				insert.setString(2, rs.getString("User"));
+				insert.setInt(3, rs.getInt("votes"));
+				insert.setString(4, format.format(new Date()));
+				insert.addBatch();
+				cnt++;
+			}while(rs.next());
+			
+			insert.executeBatch();
+			insert.close();
+			rs.close();
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}	
+		return cnt;
 	}
 	
 	private void backupXTopVotes() {
@@ -650,10 +673,24 @@ public class DbTask {
 			ps.setString(2, lastvote);
 			ps.setString(3, username);
 			ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void clearBackupedVotes() {
+		// Vote_backup (vbid INT AUTO_INCREMENT,UUID VARCHAR(64),username VARCHAR(30),votes int,backupdate VARCHAR(30),PRIMARY KEY (vbid));
+		try {
+			PreparedStatement ps = getPreparedStmnt("Truncate Vote_backup");
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	
 	
 }

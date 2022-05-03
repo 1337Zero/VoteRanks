@@ -10,11 +10,9 @@ import de.cultcraft.zero.utils.RandomItemStack;
 import de.cultcraft.zero.utils.Thread_CloseSidebar;
 import de.cultcraft.zero.utils.VoteWorker;
 import de.cultcraft.zero.voteranks.VoteRanks;
-import net.milkbowl.vault.chat.Chat;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
